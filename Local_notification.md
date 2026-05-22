@@ -50,3 +50,74 @@ void main() async {
   runApp(const MyApp());
 }
 ```
+### notification.dart
+```dart
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class LocalNotificationService {
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  static Future<void> initialize() async {
+    const AndroidInitializationSettings androidSettings =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings();
+
+    const InitializationSettings initializationSettings = InitializationSettings(
+      android: androidSettings,
+      iOS: iosSettings,
+    );
+
+    await _notificationsPlugin.initialize(
+      settings: initializationSettings,
+      onDidReceiveNotificationResponse: _onNotificationTap,
+    );
+
+    await _requestPermission();
+  }
+
+  static void _onNotificationTap(NotificationResponse response) {
+    if (response.payload != null) {
+      print("Payload: ${response.payload}");
+    }
+  }
+
+  static Future<void> _requestPermission() async {
+    final androidImplementation =
+    _notificationsPlugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+
+    await androidImplementation?.requestNotificationsPermission();
+  }
+
+  static Future<void> showNotification({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+  }) async {
+    const AndroidNotificationDetails androidDetails =
+    AndroidNotificationDetails(
+      'default_channel',
+      'Default Channel',
+      channelDescription: 'Default channel',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _notificationsPlugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: details,
+      payload: payload,
+    );
+  }
+}
+
+```
