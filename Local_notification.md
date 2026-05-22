@@ -121,3 +121,16 @@ class LocalNotificationService {
 }
 
 ```
+### Local Button
+```dart
+
+ child: ElevatedButton(
+            onPressed: (){
+              LocalNotificationService.showNotification(
+                title: "Hello",
+                body: "This is Flutter notification",
+              );
+            },
+            child: Text("Show Notificaton")
+        ),
+```
