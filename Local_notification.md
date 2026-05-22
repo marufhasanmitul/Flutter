@@ -1,7 +1,3 @@
-pus
-flutter_local_notifications: ^21.0.0
-
-### Initialization
+### pubspec.yaml
 ```dart
-const AndroidInitializationSettings androidSettings =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+flutter_local_notifications: ^21.0.0
