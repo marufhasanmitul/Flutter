@@ -40,3 +40,13 @@ android {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
+
+```
+### main.dart
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotificationService.initialize();
+  runApp(const MyApp());
+}
+```
